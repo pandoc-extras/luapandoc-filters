@@ -5,14 +5,19 @@
 -- * [Gregorio](http://gregorio-project.github.io/)
 -- * and Ghostscript are installed.
 --
--- * NOTE ABOUT PDF GENERATION: you need to add those switches to pandoc:
--- *   --pdf-engine=lualatex
--- *   --pdf-engine-opt="-shell-escape"
--- *   --pdf-engine-opt="-output-directory=./"
--- * Then ignore the "Error producing PDF." message; the result will be named
--- * "input.pdf".
--- * Or better: first generate a DOC.tex document, then compile it with
--- * lualatex --shell-escape DOC
+-- * NOTE ABOUT PDF GENERATION: pandoc compiles the document from another
+-- * directory than the current one. Because of that, you have to invoke pandoc
+-- * with the environment variable openout_any set to a. Moreover, it needs to
+-- * call Gregorio, which is an external program; hence the need for a
+-- * shell-escape switch. For example:
+-- *
+-- *   openout_any=a pandoc --pdf-engine=lualatex --pdf-engine-opt="-shell-escape" --lua-filter=gabc.lua -s -o DOC.pdf DOC.md
+-- *
+-- * Another solution is to first generate a DOC.tex document, then compile it
+-- * (twice to let Gregorio make its calculations):
+-- *   pandoc --lua-filter=gabc.lua -s --self-contained -o DOC.tex DOC.md
+-- *   lualatex -shell-escape DOC
+-- *   lualatex -shell-escape DOC
 
 
 local filetypes = { html = {"png", "image/png"}
