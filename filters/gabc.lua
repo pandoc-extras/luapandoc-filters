@@ -11,6 +11,8 @@
 -- *   --pdf-engine-opt="-output-directory=./"
 -- * Then ignore the "Error producing PDF." message; the result will be named
 -- * "input.pdf".
+-- * Or better: first generate a DOC.tex document, then compile it with
+-- * lualatex --shell-escape DOC
 
 
 local filetypes = { html = {"png", "image/png"}
