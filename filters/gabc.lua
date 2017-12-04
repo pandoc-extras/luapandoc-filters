@@ -4,6 +4,13 @@
 -- * Assumes that LuaLaTeX (with a reasonable collection of packages),
 -- * [Gregorio](http://gregorio-project.github.io/)
 -- * and Ghostscript are installed.
+--
+-- * NOTE ABOUT PDF GENERATION: you need to add those switches to pandoc:
+-- *   --pdf-engine=lualatex
+-- *   --pdf-engine-opt="-shell-escape"
+-- *   --pdf-engine-opt="-output-directory=./"
+-- * Then ignore the "Error producing PDF." message; the result will be named
+-- * "input.pdf".
 
 
 local filetypes = { html = {"png", "image/png"}
@@ -231,6 +238,7 @@ local function latex_params(attrs)
         elseif k == 'initiallines' then
             table.insert(params,
                          string.format('\\gresetinitiallines{%s}', v))
+        elseif k == 'width' then ; -- TODO: take line width in account with tex/pdf export
         else
             table.insert(params,
                          string.format('\\grechangedim{%s}{%s}{scalable}', k, v))
